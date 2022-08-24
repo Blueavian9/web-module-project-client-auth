@@ -4,7 +4,20 @@ import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 
 
 const Login = () => {
-  return (<h2>Login</h2>)
+  return (<div>
+    <h1>Login</h1>
+    <form>
+      <div>
+        <label htmlFor="username">Username</label>
+        <input id="username"/>
+      </div>
+      <div>
+        <label htmlFor="password">Password:</label>
+        <input type="password" id="password"/>
+      </div>
+      <button>Submit</button>
+    </form>
+  </div>)
 }
 
 const FriendsList = () => {
@@ -22,6 +35,7 @@ function App() {
         <Route exact path="/">
           <Login/>
         </Route>
+
         <Route exact path="/login">
           <Redirect to="/"/>
         <Login/>
@@ -30,6 +44,7 @@ function App() {
         <Route exact path="/friends">
           <FriendsList/>
         </Route>
+
         <Route exact path="/friends/add">
           <AddFriend/>
         </Route>

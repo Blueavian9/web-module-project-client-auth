@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 
 
 const Login = () => {
@@ -23,8 +23,10 @@ function App() {
           <Login/>
         </Route>
         <Route exact path="/login">
+          <Redirect to="/"/>
         <Login/>
         </Route>
+
         <Route exact path="/friends">
           <FriendsList/>
         </Route>

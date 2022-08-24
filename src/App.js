@@ -2,6 +2,11 @@ import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Redirect} from 'react-router-dom';
 
+import Login from './components/Login';
+import FriendsList from './components/FriendsList';
+import AddFriend from './components/AddFriend';
+
+
 
 const Login = () => {
   return (<div>

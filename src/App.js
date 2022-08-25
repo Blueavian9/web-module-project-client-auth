@@ -7,7 +7,10 @@ import FriendsList from './components/FriendsList';
 import AddFriend from './components/AddFriend';
 import Logout from './components/Logout';
 
-// 00:43:25
+import PrivateRoute from './components/PrivateRoute';
+
+// 00:56:53
+
 
 function App() {
   return (
@@ -29,9 +32,11 @@ function App() {
         <Login/>
         </Route>
 
-        <Route exact path="/friends">
-          <FriendsList/>
-        </Route>
+        <PrivateRoute exact path="/friends" component={FriendsList}/>
+        
+        <PrivateRoute exact path="/friends" component={AddFriend}/>
+        
+        <PrivateRoute exact path="/friends" component={Logout}/>
 
         <Route exact path="/friends/add">
           <AddFriend/>

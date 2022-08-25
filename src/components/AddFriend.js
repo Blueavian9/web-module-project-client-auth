@@ -25,10 +25,10 @@ const AddFriend = () => {
                 authorization: token
             }
         })
-            .then(resp=>{
+            .then(resp) =>{
                 push('/friends');
             })
-            .catch(err=> {
+            .catch(err) => {
                 console.log(err);
             })
 }
@@ -53,4 +53,4 @@ const AddFriend = () => {
     </div>)
 }
 
-export default AddFriend;
+export default AddFriend

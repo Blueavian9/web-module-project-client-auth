@@ -5,9 +5,9 @@ import { BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom'
 import Login from './components/Login';
 import FriendsList from './components/FriendsList';
 import AddFriend from './components/AddFriend';
+import Logout from './components/Logout';
 
-// 00:38:06
-
+// 00:43:25
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
           <Link className="link" to="login">Login</Link> 
           <Link className="link" to="friends">Friends List</Link>
           <Link className="link" to="friends/add">Add Friends</Link>
-          <Link className="link" to="friends">Logout</Link>   
+          <Link className="link" to="logout">Logout</Link>   
         </header>
         <Route exact path="/">
           <Login/>
@@ -36,6 +36,10 @@ function App() {
         <Route exact path="/friends/add">
           <AddFriend/>
         </Route>
+
+       <Route exact path="/logout">
+        <Logout/>
+       </Route>
       </div>
     </Router>
   );

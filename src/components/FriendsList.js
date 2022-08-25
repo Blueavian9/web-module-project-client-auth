@@ -22,9 +22,9 @@ const FriendsList = ()=> {
               friends.map(friend=> {
               return<li>{friend.name}-{friend.age}-{friend.email}</li>
             });
-
         </ul>
     </div>)
 
+}
 
 export default FriendsList;

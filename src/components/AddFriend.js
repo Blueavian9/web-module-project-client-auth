@@ -53,4 +53,4 @@ const AddFriend = () => {
     </div>)
 }
 
-export default AddFriend
+export default AddFriend;

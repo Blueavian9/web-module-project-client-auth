@@ -25,6 +25,6 @@ const FriendsList = ()=> {
 
         </ul>
     </div>)
-}
+
 
 export default FriendsList;

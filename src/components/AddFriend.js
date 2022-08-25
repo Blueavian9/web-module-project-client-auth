@@ -25,13 +25,13 @@ const AddFriend = () => {
                 authorization: token
             }
         })
-            .then(resp) =>{
+            .then(resp=>{
                 push('/friends');
             })
-            .catch(err) => {
+            .catch(err=> {
                 console.log(err);
             })
-}
+        }
 
     return (<div>
     <h2>AddFriend</h2>

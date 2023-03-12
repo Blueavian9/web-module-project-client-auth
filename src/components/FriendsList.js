@@ -1,30 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import axiosWithAuth from './../utils/axiosWithAuth';
+import React from "react";
+import { Link, withRouter } from "react-router-dom";
+import Friend from "./Friend";
+import { axiosWithAuth } from "../axiosAuth";
 
-const FriendsList = ()=> {
-    const [ friends, setFriends ] = useState([]);
-    useEffect(()=> {
-        const token = localStorage.getItem("token");
+class FriendsList extends React.Component {
+  state = {
+    friends: [],
+    selectedFriend: null,
+  };
 
-        axiosWithAuth().get('/friends')         
-            .then(resp=> {
-                setFriends(resp.data);
-            })
-            .catch(err=> {
-                console.log(err);
-            });
+  componentDidMount() {
+    if (!this.state.friends.length) {
+      axiosWithAuth()
+        .get("http://localhost:9000/api/friends")
+        .then((res) => {
+          this.setState({ ...this.state, friends: res.data });
+        })
+        .catch((err) => console.error(err));
+    }
+  }
 
-    return (<div>
-        <h2>FriendsList</h2>
-        <ul>
-            {
-              friends.map(friend=> {
-              return<li>{friend.name}-{friend.age}-{friend.email}</li>
-            });
-        </ul>
-    </div>)
+  render() {
+    return (
+      <>
+        <div className="friends-list">
+          <div className="friends-header">
+            <h2>this is the friends list</h2>
+            <Link to="/friends/add">Add New Friend</Link>
+          </div>
 
+          {!!this.state.friends.length &&
+            this.state.friends.map((fr) => {
+              return <Friend friend={fr} key={fr.id} />;
+            })}
+          {!this.state.friends.length && <p>loading...</p>}
+        </div>
+      </>
+    );
+  }
 }
 
-export default FriendsList;
+export default withRouter(FriendsList);

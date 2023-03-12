@@ -1,49 +1,64 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from "react";
+import axios from "axios";
 
-import axios from 'axios';
+const initialState = {
+  username: "",
+  password: "",
+};
 
-const Login = () => {
-    const { push } = useHistory();
+class Login extends React.Component {
+  state = {
+    username: "",
+    password: "",
+  };
 
-    const [cred, setCred] = useState({
-        username:"",
-        password:""
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState({
+      ...this.state,
+      [name]: value,
     });
+  };
 
-    const handleChange = (e) => {
-        setCred({
-            ...cred,
-            [e.target.name]:e.target.value
-        })
-    }
+  handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("http://localhost:9000/api/login", this.state)
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        this.setState(initialState);
+        this.props.history.push("/friends");
+      })
+      .catch((err) => console.error(err));
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post('http://localhost:5000/api/login', cred)
-            .then(resp => {
-                localStorage.setItem("token", resp.payload);
-                 push('/friends');
-            })
-            .catch(err=> {
-                console.log(err);
-            });
-    }
-
-    return (<div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="username">Username</label>
-          <input onChange={handleChange} name="username" id="username"/>
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input onChange={handleChange} name="password" type="password" id="password"/>
-        </div>
-        <button>Submit</button>
-      </form>
-    </div>)
+  render() {
+    return (
+      <section className="login-cred">
+        <form onSubmit={this.handleSubmit}>
+          <label>
+            Username
+            <input
+              type="text"
+              name="username"
+              onChange={this.handleChange}
+              value={this.state.username}
+            />
+          </label>
+          <label>
+            Password
+            <input
+              type="password"
+              name="password"
+              onChange={this.handleChange}
+              value={this.state.password}
+            />
+          </label>
+          <input type="submit" id="form-button" />
+        </form>
+      </section>
+    );
   }
+}
 
-  export default Login;
+export default Login;

@@ -1,56 +1,61 @@
-import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import { axiosWithAuth } from "../axiosAuth";
+
+const initialForm = {
+  name: "",
+  age: "",
+  email: "",
+};
 
 const AddFriend = () => {
-    const { push } = useHistory();
-    const [form, setForm] = useState({
-        name:'',
-        age:'',
-        email:''
-    });
+  const [input, setInput] = useState(initialForm);
 
-    const handleChange = (e) => {
-        setForm({
-            ...form,
-            [e.target.name]:e.target.value
-        });
-    }
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        const token = localStorage.getItem('token');
-        axios.post('http://localhost:5000/api/friends', form, {
-            headers: {
-                authorization: token
-            }
-        })
-            .then(resp=>{
-                push('/friends');
-            })
-            .catch(err=> {
-                console.log(err);
-            })
-        }
-
-    return (<div>
-    <h2>AddFriend</h2>
-    <form onSubmit={handleSubmit}>
-        <div>
-            <label htmlFor="name">Name:</label>
-            <input onChange={handleChange} name="name" id="name"/>
-        </div>
-        <div>
-            <label htmlFor="age">Age:</label>
-            <input onChange={handleChange} name="age" id="age"/>
-        </div>
-        <div>
-            <label htmlFor="email">Email:</label>
-            <input onChange={handleChange} name="email" id="email"/>
-        </div>
-        <button>Submit</button>
-      </form>
-    </div>)
-}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axiosWithAuth()
+      .post("http://localhost:9000/api/friends", input)
+      .then((res) => {
+        window.location.href = "/friends";
+      })
+      .catch((err) => console.error(err));
+  };
+  return (
+    <form onSubmit={handleSubmit} className="add-friend">
+      <label>
+        Name
+        <input
+          type="text"
+          name="name"
+          onChange={handleInput}
+          value={input.name}
+        />
+      </label>
+      <label>
+        Age
+        <input
+          type="text"
+          name="age"
+          onChange={handleInput}
+          value={input.age}
+        />
+      </label>
+      <label>
+        Email
+        <input
+          type="text"
+          name="email"
+          onChange={handleInput}
+          value={input.email}
+        />
+      </label>
+      <input type="submit" id="addNew-button" />
+    </form>
+  );
+};
 
 export default AddFriend;
